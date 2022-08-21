@@ -1,14 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
-
+﻿
 using Microsoft.Build.Locator;
 using Microsoft.CodeAnalysis.MSBuild;
 
 
 
 const string path =  @"C:\Users\winsky\source\repos\Winsky.UnitTestBuilder\UnitTestBuilder\UnitTestBuilder.sln";
-const string projectName = "Winsky.UnitTestBuilder"; //"LibraryToBeTested";
-//MSBuildLocator.RegisterDefaults();
-var x = MSBuildLocator.QueryVisualStudioInstances().ToArray();
+const string projectName = "LibraryToBeTested"; //"LibraryToBeTested";
+
 
 
 
@@ -30,5 +28,11 @@ foreach (var diagnostic in diagnostics)
 var project = sln.Projects.FirstOrDefault(x => x.Name == projectName);
 if (project == null) return;
 var sampleToAnalyzeCompilation = await project.GetCompilationAsync();
+
+foreach (var document in project.Documents)
+{
+    var tree = await document.GetSyntaxTreeAsync();
+}
+
 
 Console.ReadLine();
